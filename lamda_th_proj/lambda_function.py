@@ -6,21 +6,35 @@ import pandas as pd
 import json
 
 
-#implement getcostandusage api to get json
 
-def writeToDynamo(event, context):
+
+def lambda_handler(event, context):
+    #for multiple accounts touch up
+    aws_account_id = context.invoked_function_arn.split(":")[4]
+    request = build_request(aws_account_id)
+    client = boto3.client('ce')
+    costData = client.get_cost_and_usage(
+        TimePeriod=request['TimePeriod'], Granularity=request['Granularity'], Filter=request['Filter'], Metrics=request['Metrics'], GroupBy=request['GroupBy'])
+    writeToDynamo(costData, aws_account_id)
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Dynamo !')
+    }
+
+
+def writeToDynamo(event, accountnr):
 
     recordId = str(uuid.uuid4())
-    timestamp = event["ResultsByTime"]["TimePeriod"]["End"]
-    data = event["ResultsByTime"][0]["Groups"]
+    timestamp = event["ResultsByTime"][0]["TimePeriod"]["End"]
+    data = extract_cost_data(event)
 
     #Creating new record in DynamoDB table
     dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table(os.environ['DB_TABLE_NAME'])
+    table = dynamodb.Table("Cost_Data_thbt1")
     table.put_item(
         Item={
-            'id' : recordId, #placeholder replace with account number
-            'timestamp' : timestamp,
+            'Costdata' : accountnr, #placeholder replace with account number
+            'Date' : timestamp,
             'data' : data
         }
     )
@@ -46,7 +60,10 @@ def build_request(account_nr):
 def extract_cost_data(data):
     temp = data['ResultsByTime'][0]['Groups']
     df = pd.DataFrame(temp)
+    res = {}
     for x in range(df.size // 2):
-        df.loc[x, 'Metrics'] = df.loc[x, 'Metrics']['BlendedCost']['Amount']
-        df.loc[x, 'Keys'] = df.loc[x, 'Keys'][0]
-    return df
+        if df.loc[x, 'Metrics']['BlendedCost']['Amount'] == '0':
+            continue
+        else:
+            res[df.loc[x, 'Keys'][0]] = df.loc[x, 'Metrics']['BlendedCost']['Amount']
+    return res
