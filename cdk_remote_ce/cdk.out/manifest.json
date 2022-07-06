@@ -1,0 +1,76 @@
+{
+  "version": "20.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "CdkRemoteCeStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CdkRemoteCeStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "CdkRemoteCeStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://212354909846/us-east-1",
+      "properties": {
+        "templateFile": "CdkRemoteCeStack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::212354909846:role/cdk-hnb659fds-deploy-role-212354909846-us-east-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::212354909846:role/cdk-hnb659fds-cfn-exec-role-212354909846-us-east-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-212354909846-us-east-1/40c7c2e7bf348afaef7457ac1dd0f294ea23d7bedf65fdc31e5b9aeecc703b15.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "CdkRemoteCeStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::212354909846:role/cdk-hnb659fds-lookup-role-212354909846-us-east-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "CdkRemoteCeStack.assets"
+      ],
+      "metadata": {
+        "/CdkRemoteCeStack/CEAccess/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CEAccessF5785842"
+          }
+        ],
+        "/CdkRemoteCeStack/ExternalCE/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ExternalCE8AFAA0E5"
+          }
+        ],
+        "/CdkRemoteCeStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/CdkRemoteCeStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/CdkRemoteCeStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "CdkRemoteCeStack"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "version": "20.0.0",
+  "files": {
+    "40c7c2e7bf348afaef7457ac1dd0f294ea23d7bedf65fdc31e5b9aeecc703b15": {
+      "source": {
+        "path": "CdkRemoteCeStack.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "212354909846-us-east-1": {
+          "bucketName": "cdk-hnb659fds-assets-212354909846-us-east-1",
+          "objectKey": "40c7c2e7bf348afaef7457ac1dd0f294ea23d7bedf65fdc31e5b9aeecc703b15.json",
+          "region": "us-east-1",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::212354909846:role/cdk-hnb659fds-file-publishing-role-212354909846-us-east-1"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}
