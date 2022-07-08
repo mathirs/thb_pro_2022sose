@@ -11,18 +11,15 @@ class CdkRemoteCeStack(Stack):
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        policy = iam.Policy(
-            self, 'CEAccess',
-            statements=[iam.PolicyStatement(
-                actions=['ce:GetCostAndUsage'],
-                resources=['*'],
-            )],
-        )
-
         role = iam.Role(
             self, 'ExternalCE',
             assumed_by=iam.AccountPrincipal('960901075320'),
         )
 
-        role.add_managed_policy(policy)
+        role.add_to_principal_policy(
+            iam.PolicyStatement(
+                actions=['ce:GetCostAndUsage'],
+                resources=['*'],
+            )
+        )
 
