@@ -1,0 +1,164 @@
+{
+  "version": "20.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "CdkMainStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "CdkMainStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "CdkMainStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://960901075320/us-east-1",
+      "properties": {
+        "templateFile": "CdkMainStack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::960901075320:role/cdk-hnb659fds-deploy-role-960901075320-us-east-1",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::960901075320:role/cdk-hnb659fds-cfn-exec-role-960901075320-us-east-1",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-960901075320-us-east-1/6539dee6f8be11fcb89646fbe33a39e81a4afb9865572cf54fe93d15753b8a48.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "CdkMainStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::960901075320:role/cdk-hnb659fds-lookup-role-960901075320-us-east-1",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "CdkMainStack.assets"
+      ],
+      "metadata": {
+        "/CdkMainStack/db_update/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "dbupdateServiceRoleB4733CFD"
+          }
+        ],
+        "/CdkMainStack/db_update/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "dbupdateServiceRoleDefaultPolicy8375DACB"
+          }
+        ],
+        "/CdkMainStack/db_update/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "dbupdate4A3ED1C1"
+          }
+        ],
+        "/CdkMainStack/email_generator/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailgeneratorServiceRole8A1A0D84"
+          }
+        ],
+        "/CdkMainStack/email_generator/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailgeneratorServiceRoleDefaultPolicy2F598FAB"
+          }
+        ],
+        "/CdkMainStack/email_generator/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "emailgenerator8146E741"
+          }
+        ],
+        "/CdkMainStack/Accounts_THB": [
+          {
+            "type": "aws:cdk:hasPhysicalName",
+            "data": {
+              "Ref": "AccountsTHB3758A258"
+            }
+          }
+        ],
+        "/CdkMainStack/Accounts_THB/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AccountsTHB3758A258"
+          }
+        ],
+        "/CdkMainStack/CostData_THB": [
+          {
+            "type": "aws:cdk:hasPhysicalName",
+            "data": {
+              "Ref": "CostDataTHB21E643D6"
+            }
+          }
+        ],
+        "/CdkMainStack/CostData_THB/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CostDataTHB21E643D6"
+          }
+        ],
+        "/CdkMainStack/StateMachine/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StateMachineRoleB840431D"
+          }
+        ],
+        "/CdkMainStack/StateMachine/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StateMachineRoleDefaultPolicyDF1E6607"
+          }
+        ],
+        "/CdkMainStack/StateMachine/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StateMachine2E01A3A5"
+          }
+        ],
+        "/CdkMainStack/StateMachine/EventsRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StateMachineEventsRoleDBCDECD1"
+          }
+        ],
+        "/CdkMainStack/StateMachine/EventsRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "StateMachineEventsRoleDefaultPolicyFB602CA9"
+          }
+        ],
+        "/CdkMainStack/Scheduled Trigger/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ScheduledTrigger2828A67B"
+          }
+        ],
+        "/CdkMainStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/CdkMainStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/CdkMainStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "CdkMainStack"
+    }
+  }
+}
