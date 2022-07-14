@@ -16,8 +16,8 @@ import datetime
 
 def lambda_handler(event, context):
     client = boto3.resource("dynamodb")
-    cost_table = client.Table("CostData_THB2")
-    account_table = client.Table("Accounts_THB2")
+    cost_table = client.Table("CostData_THB")
+    account_table = client.Table("Accounts_THB")
     accounts = account_table.scan()['Items']
     curr_date = datetime.date.today()
     curr_date = datetime.date(curr_date.year, curr_date.month, 1)
@@ -42,16 +42,17 @@ def lambda_handler(event, context):
                 valuelist.append(float(x))
             totals.append(sum(valuelist))
             if date_to_use.month != 1:
-                dates.append(str(date_to_use.month - 1) + '-' + str(date_to_use.year))
+                dates.append(str(date_to_use.month-1) + '-' + str(date_to_use.year))
             else:
-                dates.append('12-' + str(date_to_use.year - 1))
+                dates.append('12-' + str(date_to_use.year-1))
+
 
         # verify clean plot
         plt.clf()
 
         bargraph = BytesIO()
-        New_Colors = ['#0089BA', '#00A7C5', '#00C2BB', '#48DAA2', '#A3ED84', '#F9F871', '#5FBEF2']
-        plt.bar(range(6), totals, align='center', color=New_Colors)
+        colors = ['#ff9999','#66b3ff','#99ff99','#ffcc99','#A9BD5A',"#6FBAaD"]
+        plt.bar(range(6), totals, align='center', color=colors)
         plt.title('AWS Cost Data', fontsize=14)
         plt.xlabel('Services', fontsize=14)
         plt.ylabel('Cost', fontsize=14)
@@ -83,7 +84,7 @@ def lambda_handler(event, context):
             sizes.append(other)
 
         # Plot
-        plt.pie(sizes, labels=labels, autopct='%1.1f%%')
+        plt.pie(sizes, labels=labels, autopct='%1.1f%%',colors=colors)
 
         plt.axis('equal')
         plt.savefig(piechart, format='png', bbox_inches='tight')
@@ -104,6 +105,7 @@ def lambda_handler(event, context):
 
 
 def send_email(doc, line, total):
+
     # Replace sender@example.com with your "From" address.
     # This address must be verified with Amazon SES.
     SENDER = "Cost Data Messenger" + " <projthbingen@gmail.com>"
@@ -111,6 +113,7 @@ def send_email(doc, line, total):
     # Replace recipient@example.com with a "To" address. If your account
     # is still in the sandbox, this address must be verified.
     RECIPIENT = list(line["Emails"])
+
 
     # Specify a configuration set. If you do not want to use a configuration
     # set, comment the following variable, and the
@@ -134,8 +137,9 @@ def send_email(doc, line, total):
 
     # The HTML body of the email.
     BODY_TEXT = """Guten Tag,
-
+    
 Im Anhang finden Sie den Kostenbericht für diesen Monat. Die Gesamtkosten betragen """ + str(np.around(total, 2)) + '€'
+
 
     # The character encoding for the email.
     CHARSET = "UTF-8"
