@@ -28,6 +28,7 @@ def lambda_handler(event, context):
         valuelist = []
         costs = {}
         for x in range(6):
+            valuelist = []
             if curr_date.month - 5 + x > 0:
                 date_to_use = datetime.date(curr_date.year, curr_date.month - 5 + x, 1)
             else:
